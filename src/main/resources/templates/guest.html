@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${guest.name} + ' Page'">Guest Page</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap">
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="scroll">
+            <div class="scroll-top"></div>
+            <div class="scroll-content">
+                <h1 class="calligraphy-header" th:text="|${guest.name}'s Page|">Guest's Page</h1>
+                
+				<div class="guest-details">
+				    <div class="guest-portrait-container">
+						<svg class="guest-portrait" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+						    <!-- Decorative frame -->
+						    <path d="M10,10 L90,10 L90,90 L10,90 Z" fill="none" stroke="#8b4513" stroke-width="6" />
+						    <path d="M5,5 L95,5 L95,95 L5,95 Z" fill="none" stroke="#d9c7a6" stroke-width="2" />
+						    
+						    <!-- User silhouette -->
+						    <circle cx="50" cy="35" r="15" fill="#614e3c" />
+						    <path d="M30,70 C30,55 70,55 70,70" fill="#614e3c" />
+						    <path d="M25,75 C25,60 75,60 75,75" fill="none" stroke="#614e3c" stroke-width="10" stroke-linecap="round" />
+						    
+						    <!-- Small decorative elements -->
+						    <circle cx="15" cy="15" r="3" fill="#8b4513" />
+						    <circle cx="85" cy="15" r="3" fill="#8b4513" />
+						    <circle cx="15" cy="85" r="3" fill="#8b4513" />
+						    <circle cx="85" cy="85" r="3" fill="#8b4513" />
+						</svg>
+
+				    </div>
+				    <div class="guest-info">
+				        <p><strong>Name:</strong> <span th:text="${guest.name}">Guest Name</span></p>
+				        <p><strong>Age:</strong> <span th:text="${guest.age}">25</span></p>
+				        <p><strong>Signed:</strong> <span th:text="${#temporals.format(guest.createdAt, 'MMMM dd, yyyy HH:mm')}">January 1, 2023</span></p>
+				    </div>
+				</div>
+                
+                <div class="comments-section">
+                    <h2 class="diablo-subheader">Wall Writing</h2>
+                    
+                    <div th:if="${guest.comments.empty}" class="empty-message">
+                        <p>No comments yet. Be the first to leave a comment!</p>
+                    </div>
+                    
+                    <div th:unless="${guest.comments.empty}" class="comments-list">
+                        <div th:each="comment : ${guest.comments}" class="comment">
+                            <p class="comment-content" th:text="${comment.content}">Comment text</p>
+                            <p class="comment-meta">
+                                <span class="comment-author" th:text="${'~ ' + comment.author}">Author</span> | 
+                                <span class="comment-date" th:text="${#temporals.format(comment.createdAt, 'MMMM dd, yyyy HH:mm')}">Date</span>
+                            </p>
+                            <div class="comment-api">
+                                <p class="api-hint">To delete this comment: DELETE /api/guests/<span th:text="${guest.id}"></span>/comments/<span th:text="${comment.id}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="api-info">
+                    <h2>REST API Usage</h2>
+                    <p>To post a comment on this wall, make a POST request to:</p>
+                    <pre>/api/guests/<span th:text="${guest.id}"></span>/comments</pre>
+                    <p>With JSON body:</p>
+                    <pre>{"content": "Your comment", "author": "Your Name"}</pre>
+                    
+                    <p>To delete a comment, make a DELETE request to:</p>
+                    <pre>/api/guests/<span th:text="${guest.id}"></span>/comments/{commentId}</pre>
+                </div>
+                
+                <div class="back-link">
+                    <a th:href="@{/}">Back to Guestbook</a>
+                </div>
+            </div>
+            <div class="scroll-bottom"></div>
+        </div>
+    </div>
+</body>
+</html>

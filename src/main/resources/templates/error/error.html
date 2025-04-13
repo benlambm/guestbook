@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+	<link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="scroll">
+            <div class="scroll-top"></div>
+            <div class="scroll-content">
+                <h1 class="calligraphy-header">An Error Occurred</h1>
+                
+                <div class="icon-404">⚠️</div>
+                <h2 class="error-code" th:text="${status ?: 'Error'}">Error</h2>
+                
+                <p class="diablo-subheader">Darkness has clouded your path</p>
+                
+                <p class="error-message" th:text="${message ?: 'Something went wrong'}">Something went wrong</p>
+
+                <div class="error-details">
+                    <p th:if="${timestamp}" th:text="${'Encountered at: ' + #dates.format(timestamp, 'dd MMM yyyy HH:mm:ss')}">Encountered at: 01 Jan 2025 12:00:00</p>
+                    <p th:if="${path}" th:text="${'Path: ' + path}">Path: /unknown</p>
+                </div>
+                
+                <div class="back-link">
+                    <a href="/" th:href="@{/}">
+                        Return to the Sanctuary
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-bottom"></div>
+        </div>
+    </div>
+</body>
+</html>

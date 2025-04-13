@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+	<link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="scroll">
+            <div class="scroll-top"></div>
+            <div class="scroll-content">
+                <h1 class="calligraphy-header">Lost Scroll</h1>
+                
+                <div class="icon-404">💀</div>
+                <h2 class="error-code">404</h2>
+                
+                <p class="diablo-subheader">The page you seek has been banished to the burning hells</p>
+                
+                <p class="error-message">A dark magic has corrupted this path, or perhaps it never existed at all.</p>
+
+                <div class="error-details">
+                    <p th:if="${timestamp}" th:text="${'Encountered at: ' + #dates.format(timestamp, 'dd MMM yyyy HH:mm:ss')}">Encountered at: 01 Jan 2025 12:00:00</p>
+                    <p th:if="${path}" th:text="${'Path: ' + path}">Path: /unknown</p>
+                    <p th:if="${message}" th:text="${'Message: ' + message}">Unknown error occurred</p>
+                </div>
+                
+                <div class="back-link">
+                    <a href="/" th:href="@{/}">
+                        Return to the Sanctuary
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-bottom"></div>
+        </div>
+    </div>
+</body>
+</html>

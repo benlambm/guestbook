@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESTful Guestbook</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap">
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="scroll">
+            <div class="scroll-top"></div>
+            <div class="scroll-content">
+                <h1 class="calligraphy-header">The Guestbook</h1>
+                
+                <h2 class="diablo-subheader index-header">Welcome, wanderer! <br> Leave thy name here. <br> REST awhile...</h2>
+                
+                <div class="guest-list">
+                    <div th:if="${guests.empty}" class="empty-message">
+                        <p>No guests have signed the guestbook yet.</p>
+                        <p>Be the first to sign using the REST API!</p>
+                    </div>
+                    
+                    <div th:unless="${guests.empty}" class="guests-container">
+                        <ul class="guest-entries">
+                            <li th:each="guest : ${guests}" class="guest-entry">
+                                <a th:href="@{/guests/{id}(id=${guest.id})}" class="guest-link">
+                                    <span th:text="${guest.name}" class="guest-name"></span>
+                                    <span class="guest-was-here">was here on  </span>
+                                    <span th:text="${#temporals.format(guest.createdAt, 'MMM d, yyyy h:mm a')}" class="guest-date"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="api-info">
+                    <h2>REST API Usage</h2>
+                    <p>To sign the guestbook, make a POST request to:</p>
+                    <pre>/api/guests</pre>
+                    <p>With JSON body:</p>
+                    <pre>{"name": "Your Name", "age": 25}</pre>
+                </div>
+            </div>
+            <div class="scroll-bottom"></div>
+        </div>
+    </div>
+</body>
+</html>
