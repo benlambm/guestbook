@@ -47,4 +47,4 @@ jobs:
           application_name: ${{ vars.APPLICATION_NAME }}
           environment_name: ${{ vars.ENVIRONMENT_NAME }}
           version_label: "guestbook-${{ github.run_number }}-${{ github.sha }}"
-          deployment_package: target/guestbook-0.1.0-SNAPSHOT.jar
+          deployment_package: deploy.zip
