@@ -52,4 +52,4 @@ jobs:
           EB_ENVIRONMENT_NAME: ${{ secrets.EB_ENVIRONMENT_NAME }}
         run:
           # Deploy to your environment.
-          eb deploy $EB_ENVIRONMENT_NAME
+          eb deploy $EB_ENVIRONMENT_NAME --region ${{ secrets.AWS_REGION }}
