@@ -9,10 +9,11 @@ Welcome! This is a simple Spring Boot Guestbook application deployed live on AWS
 1.  **Sign & Comment:**
     * Sign the guestbook using the REST API instructions on the main page.
     * Visit your personal guest page (click your name on the list).
-    * Leave **two** comments on your page using the REST API instructions provided there.
+    * Leave **two** comments at the guestbook: one on your page and one on someone else's.
 
 2.  **Contribute via Pull Request:**
-    * Suggest a small enhancement or fix for the application (e.g., improving styling, adding a feature, fixing a typo).
+    * Learn some basic git commands (on your own) and how to make a Pull Request to this Repo
+    * Code a small enhancement or fix for the application (e.g., improving styling, adding a feature, fixing a typo).
     * Create a **Pull Request (PR)** against the main GitHub repository with your proposed changes.
 
 ## How This App Demonstrates CI/CD
