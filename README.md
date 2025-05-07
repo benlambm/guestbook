@@ -2,7 +2,7 @@
 
 Welcome! This is a simple Spring Boot Guestbook application deployed live on AWS, demonstrating a basic CI/CD pipeline.
 
-**Live URL:** [http://guestbook-env.eba-yqpn5naf.us-east-1.elasticbeanstalk.com/](http://guestbook-env.eba-yqpn5naf.us-east-1.elasticbeanstalk.com/)
+**Live URL:** [https://guestbook-48d7c5e0f444.herokuapp.com/](https://guestbook-48d7c5e0f444.herokuapp.com/)
 
 **Extra Credit Opportunities:**
 
