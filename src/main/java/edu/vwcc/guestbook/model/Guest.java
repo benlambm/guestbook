@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -41,6 +42,10 @@ public class Guest {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "delete_token", nullable = false, unique = true, updatable = false)
     private String deleteToken;
+
+    @JsonIgnore
+    @Column(name = "view_count", nullable = false)
+    private Long viewCount = 0L;
 
     // Constructors
     public Guest() {
@@ -92,6 +97,14 @@ public class Guest {
 
     public void setDeleteToken(String deleteToken) {
         this.deleteToken = deleteToken;
+    }
+
+    public Long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
     }
 
     // Object methods

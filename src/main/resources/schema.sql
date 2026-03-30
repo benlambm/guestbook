@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS guests (
   nickname VARCHAR(255) NOT NULL,
   comment VARCHAR(500) NOT NULL,
   created_at DATETIME NOT NULL,
-  delete_token VARCHAR(36) NOT NULL UNIQUE
+  delete_token VARCHAR(36) NOT NULL UNIQUE,
+  view_count BIGINT NOT NULL DEFAULT 0
 );

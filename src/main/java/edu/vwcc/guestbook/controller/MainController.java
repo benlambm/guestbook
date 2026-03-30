@@ -26,12 +26,14 @@ public class MainController {
 
     @GetMapping("/guests/{id}")
     public String guestDetails(@PathVariable Long id, Model model) {
-        Optional<Guest> guestOptional = guestRepository.findById(id);   
+        Optional<Guest> guestOptional = guestRepository.findById(id);
         if (guestOptional.isEmpty()) {
-            // Return 404 status and let Spring Boot handle showing the error page
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Guest not found with ID: " + id);
-        }       
-        model.addAttribute("guest", guestOptional.get());
+        }
+        Guest guest = guestOptional.get();
+        guest.setViewCount(guest.getViewCount() + 1);
+        guestRepository.save(guest);
+        model.addAttribute("guest", guest);
         return "guest";
     }
 }
