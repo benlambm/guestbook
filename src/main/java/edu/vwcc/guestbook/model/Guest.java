@@ -1,23 +1,21 @@
 package edu.vwcc.guestbook.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "guests")
@@ -27,29 +25,32 @@ public class Guest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Nickname is required")
     @Column(nullable = false)
-    private String name;
+    private String nickname;
 
-    @NotNull(message = "Age is required")
-    @Min(value = 1, message = "Age must be greater than 0")
-    @Column(nullable = false)
-    private Integer age;
+    @NotBlank(message = "Comment is required")
+    @Size(max = 500, message = "Comment must be 500 characters or fewer")
+    @Column(nullable = false, length = 500)
+    private String comment;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Column(name = "delete_token", nullable = false, unique = true, updatable = false)
+    private String deleteToken;
 
     // Constructors
     public Guest() {
+        this.deleteToken = UUID.randomUUID().toString();
     }
 
-    public Guest(String name, Integer age) {
-        this.name = name;
-        this.age = age;
+    public Guest(String nickname, String comment) {
+        this.nickname = nickname;
+        this.comment = comment;
+        this.deleteToken = UUID.randomUUID().toString();
     }
 
     // Getters and Setters
@@ -61,20 +62,20 @@ public class Guest {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getComment() {
+        return comment;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -85,24 +86,12 @@ public class Guest {
         this.createdAt = createdAt;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public String getDeleteToken() {
+        return deleteToken;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    // Helper method to add a comment to this guest
-    public void addComment(Comment comment) {
-        comments.add(comment);
-        comment.setGuest(this);
-    }
-
-    // Helper method to remove a comment from this guest
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-        comment.setGuest(null);
+    public void setDeleteToken(String deleteToken) {
+        this.deleteToken = deleteToken;
     }
 
     // Object methods
@@ -123,8 +112,8 @@ public class Guest {
     public String toString() {
         return "Guest{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
+                ", nickname='" + nickname + '\'' +
+                ", comment='" + comment + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }

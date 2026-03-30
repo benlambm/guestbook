@@ -14,34 +14,36 @@
             <div class="scroll-top"></div>
             <div class="scroll-content">
                 <h1 class="calligraphy-header">The RESTbook</h1>
-                
-                <h2 class="diablo-subheader index-header">Welcome, wanderer! <br> Leave thy name here. <br> REST awhile...</h2>
-                
+
+                <h2 class="diablo-subheader index-header">Welcome, wanderer! <br> Leave thy mark here. <br> REST awhile...</h2>
+
                 <div class="guest-list">
                     <div th:if="${guests.empty}" class="empty-message">
                         <p>No guests have signed the guestbook yet.</p>
                         <p>Be the first to sign using the REST API!</p>
                     </div>
-                    
+
                     <div th:unless="${guests.empty}" class="guests-container">
                         <ul class="guest-entries">
                             <li th:each="guest : ${guests}" class="guest-entry">
                                 <a th:href="@{/guests/{id}(id=${guest.id})}" class="guest-link">
-                                    <span th:text="${guest.name}" class="guest-name"></span>
-                                    <span class="guest-was-here">was here on  </span>
-                                    <span th:text="${#temporals.format(guest.createdAt, 'MMM d, yyyy h:mm a')}" class="guest-date"></span>
+                                    <span th:text="${guest.nickname}" class="guest-name"></span>
+                                    <span class="guest-was-here"> signed on </span>
+                                    <span th:text="${#temporals.format(guest.createdAt, 'MMMM d, yyyy')}" class="guest-date"></span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="api-info">
                     <h2>REST API Usage</h2>
                     <p>To sign the guestbook, make a POST request to:</p>
                     <pre>/api/guests</pre>
                     <p>With JSON body:</p>
-                    <pre>{"name": "Your Name", "age": 25}</pre>
+                    <pre>{"nickname": "YourNickname", "comment": "Hello world!"}</pre>
+                    <p>You will receive a <strong>deleteToken</strong> in the response. Save it to delete your entry later:</p>
+                    <pre>DELETE /api/guests/{deleteToken}</pre>
                 </div>
             </div>
             <div class="scroll-bottom"></div>

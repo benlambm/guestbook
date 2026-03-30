@@ -1,47 +1,39 @@
 package edu.vwcc.guestbook.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import edu.vwcc.guestbook.model.Comment;
-import edu.vwcc.guestbook.model.CommentRepository;
 import edu.vwcc.guestbook.model.Guest;
 import edu.vwcc.guestbook.model.GuestRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
 public class ApiController {
+
     @Autowired
     private GuestRepository guestRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
-
     @PostMapping("/guests")
-    public Guest createGuest(@RequestBody Guest guest) {
-        Comment welcomeComment = new Comment("Welcome to your Guest page!", "SYSTEM");
-        guest.addComment(welcomeComment);
-        return guestRepository.save(guest);
+    public ResponseEntity<Guest> createGuest(@Valid @RequestBody Guest guest) {
+        Guest saved = guestRepository.save(guest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @PostMapping("/guests/{id}/comments")
-    public Comment addComment(@PathVariable Long id, @RequestBody Comment comment) {
-        Guest guest = guestRepository.findById(id).orElseThrow();
-        comment.setGuest(guest);
-        return commentRepository.save(comment);
-    }
-
-    @DeleteMapping("/guests/{guestId}/comments/{commentId}")
-    public void deleteComment(@PathVariable Long guestId, @PathVariable Long commentId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
-        if (comment.getGuest().getId().equals(guestId)) {
-            commentRepository.delete(comment);
-        }
+    @DeleteMapping("/guests/{deleteToken}")
+    public ResponseEntity<Void> deleteGuest(@PathVariable String deleteToken) {
+        Guest guest = guestRepository.findByDeleteToken(deleteToken)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "No guestbook entry found for that token"));
+        guestRepository.delete(guest);
+        return ResponseEntity.noContent().build();
     }
 }
-
