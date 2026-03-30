@@ -1,8 +1,6 @@
 # RESTful Guestbook Demo
 
-Welcome! This is a simple Spring Boot Guestbook application deployed live on AWS, demonstrating a basic CI/CD pipeline.
-
-**Live URL:** [https://guestbook-48d7c5e0f444.herokuapp.com/](https://guestbook-48d7c5e0f444.herokuapp.com/)
+Welcome! This is a simple Spring Boot Guestbook application.
 
 **Extra Credit Opportunities:**
 
@@ -15,14 +13,3 @@ Welcome! This is a simple Spring Boot Guestbook application deployed live on AWS
     * Learn some basic git commands (on your own) and how to make a Pull Request to this Repo
     * Code a small enhancement or fix for the application (e.g., improving styling, adding a feature, fixing a typo).
     * Create a **Pull Request (PR)** against the main GitHub repository with your proposed changes.
-
-## How This App Demonstrates CI/CD
-
-This Java Spring Boot application is a live example of Continuous Integration and Continuous Deployment (CI/CD). Here's what happens when you push changes to the `origin/main` branch:
-
-- **Local Changes:** You develop and push your code locally.
-- **GitHub Actions:** Your push triggers a GitHub Actions workflow.
-- **Maven Build:** The workflow runs Maven to build the application.
-- **AWS Elastic Beanstalk Deployment:** The built app is automatically deployed to AWS Elastic Beanstalk, updating the live web app.
-
-Every update flows from code commit to live deployment without manual intervention—showing the true power of CI/CD!
