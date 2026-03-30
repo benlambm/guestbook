@@ -2,12 +2,14 @@
 
 Welcome! This is a simple Spring Boot Guestbook application.
 
+**Live URL:** [https://guestbook.benlamb.net](https://guestbook.benlamb.net)
+
 **Extra Credit Opportunities:**
 
 1.  **Sign & Comment:**
     * Sign the guestbook using the REST API instructions on the main page.
-    * Visit your personal guest page (click your name on the list).
-    * Leave **two** comments at the guestbook: one on your page and one on someone else's.
+    * Visit your personal guest page (click your nickname on the list).
+    * Read through other guest comments.
 
 2.  **Contribute via Pull Request:**
     * Learn some basic git commands (on your own) and how to make a Pull Request to this Repo
